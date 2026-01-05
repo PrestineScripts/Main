@@ -1,6 +1,6 @@
 local TeleportService = game:GetService("TeleportService")
 
-local queue = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/PrestineScripts/Main/refs/heads/main/Main-Loader"))()'
+local queue = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/PrestineScripts/Main/refs/heads/main/Loader"))()'
 
 if typeof(syn) == "table" and type(syn.queue_on_teleport) == "function" then
     syn.queue_on_teleport(queue)
@@ -25,7 +25,7 @@ end
 
 local placeId = tonumber(game.PlaceId) or 0
 if placeId == 123 then
-    safe_load_from_url("")
+    safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF")
 elseif placeId == 123 then
     safe_load_from_url("")
 end
