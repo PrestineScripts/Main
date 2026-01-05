@@ -24,7 +24,7 @@ local function safe_load_from_url(url)
 end
 
 local placeId = tonumber(game.PlaceId) or 0
-if placeId == 123 then
+if placeId == 79546208627805 or placeId == 126509999114328 then
     safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF")
 elseif placeId == 123 then
     safe_load_from_url("")
