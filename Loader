@@ -26,6 +26,6 @@ end
 local placeId = tonumber(game.PlaceId) or 0
 if placeId == 79546208627805 or placeId == 126509999114328 then
     safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF")
-elseif placeId == 123 then
-    safe_load_from_url("")
+elseif placeId == 131623223084840 then
+    safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/ETFB")
 end
