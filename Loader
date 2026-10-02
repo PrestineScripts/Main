@@ -1,4 +1,20 @@
-local TeleportService = game:GetService("TeleportService")
+local Games = {
+    {
+        Name = "99 Nights in the Forest",
+        Ids = { 79546208627805, 126509999114328 },
+        Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF",
+    },
+    {
+        Name = "ETFB",
+        Ids = { 131623223084840 },
+        Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/ETFB",
+    },
+    {
+        Name = "Anime Dice",
+        Ids = { 131623223084840 },
+        Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AnimeDice",
+    },
+}
 
 local queue = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/PrestineScripts/Main/refs/heads/main/Loader"))()'
 
@@ -8,24 +24,26 @@ elseif type(queue_on_teleport) == "function" then
     queue_on_teleport(queue)
 end
 
-local function safe_load_from_url(url)
-    local ok, body_or_err = pcall(function()
-        return game:HttpGet(url)
-    end)
-    if not ok or not body_or_err then return false end
-
-    local fn, compile_err = loadstring(body_or_err)
-    if not fn then return false end
-
-    local exec_ok, exec_err = pcall(fn)
-    if not exec_ok then return false end
-
-    return true
+local ByPlaceId = {}
+for _, game_ in ipairs(Games) do
+    for _, id in ipairs(game_.Ids) do
+        ByPlaceId[id] = game_
+    end
 end
 
-local placeId = tonumber(game.PlaceId) or 0
-if placeId == 79546208627805 or placeId == 126509999114328 then
-    safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF")
-elseif placeId == 131623223084840 then
-    safe_load_from_url("https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/ETFB")
+local function safe_load_from_url(url)
+    local ok, body = pcall(function()
+        return game:HttpGet(url)
+    end)
+    if not ok or not body then return false end
+
+    local fn = loadstring(body)
+    if not fn then return false end
+
+    return (pcall(fn))
+end
+
+local entry = ByPlaceId[tonumber(game.PlaceId) or 0]
+if entry then
+    safe_load_from_url(entry.Url)
 end
