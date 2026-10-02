@@ -1,15 +1,5 @@
 local Games = {
     {
-        Name = "99 Nights in the Forest",
-        Ids = { 79546208627805, 126509999114328 },
-        Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/99NITF",
-    },
-    {
-        Name = "ETFB",
-        Ids = { 131623223084840 },
-        Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/ETFB",
-    },
-    {
         Name = "Anime Dice",
         Ids = { 113290951185459 },
         Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AnimeDice",
@@ -25,25 +15,43 @@ elseif type(queue_on_teleport) == "function" then
 end
 
 local ByPlaceId = {}
-for _, game_ in ipairs(Games) do
-    for _, id in ipairs(game_.Ids) do
-        ByPlaceId[id] = game_
+for _, entry in ipairs(Games) do
+    for _, id in ipairs(entry.Ids) do
+        if ByPlaceId[id] then
+            warn("[Prestine] Duplicate place ID " .. id .. ": " .. entry.Name .. " conflicts with " .. ByPlaceId[id].Name)
+        else
+            ByPlaceId[id] = entry
+        end
     end
 end
 
-local function safe_load_from_url(url)
+local function safe_load_from_url(name, url)
     local ok, body = pcall(function()
         return game:HttpGet(url)
     end)
-    if not ok or not body then return false end
+    if not ok or type(body) ~= "string" or body == "" then
+        warn("[Prestine] Failed to download " .. name .. ": " .. tostring(body))
+        return false
+    end
 
-    local fn = loadstring(body)
-    if not fn then return false end
+    local fn, compileErr = loadstring(body)
+    if not fn then
+        warn("[Prestine] Failed to compile " .. name .. ": " .. tostring(compileErr))
+        return false
+    end
 
-    return (pcall(fn))
+    local execOk, execErr = pcall(fn)
+    if not execOk then
+        warn("[Prestine] Error running " .. name .. ": " .. tostring(execErr))
+        return false
+    end
+
+    return true
 end
 
 local entry = ByPlaceId[tonumber(game.PlaceId) or 0]
 if entry then
-    safe_load_from_url(entry.Url)
+    safe_load_from_url(entry.Name, entry.Url)
+else
+    warn("[Prestine] Unsupported game, place ID: " .. tostring(game.PlaceId))
 end
