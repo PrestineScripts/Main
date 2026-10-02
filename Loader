@@ -11,7 +11,7 @@ local Games = {
     },
     {
         Name = "Anime Dice",
-        Ids = { 131623223084840 },
+        Ids = { 113290951185459 },
         Url = "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AnimeDice",
     },
 }
