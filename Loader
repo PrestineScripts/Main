@@ -1,6 +1,6 @@
 -- Prestine Loader
 
-local GAMES_URL = "https://raw.githubusercontent.com/PrestineScripts/PrestineLibrary/refs/heads/main/Games"
+local GAMES_URL = "https://raw.githubusercontent.com/PrestineScripts/Main/refs/heads/main/Games"
 
 local HttpService = game:GetService("HttpService")
 
