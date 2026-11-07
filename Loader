@@ -61,6 +61,12 @@ local function safe_load_from_url(name, url)
     return true
 end
 
+local function ids_of(v)
+    if type(v) == "table" then return v end
+    if v ~= nil then return { v } end
+    return {}
+end
+
 local games, fetchErr = fetch_games()
 if not games then
     warn("[Prestine] Could not load the games list: " .. tostring(fetchErr))
@@ -70,7 +76,7 @@ end
 local ByPlaceId, ByUniverseId = {}, {}
 for _, entry in ipairs(games) do
     if type(entry) == "table" and type(entry.Name) == "string" then
-        for _, id in ipairs(entry.PlaceIds or entry.Ids or {}) do
+        for _, id in ipairs(ids_of(entry.PlaceIds or entry.Ids)) do
             id = tonumber(id)
             if id then
                 if ByPlaceId[id] then
@@ -80,10 +86,17 @@ for _, entry in ipairs(games) do
                 end
             end
         end
-        for _, id in ipairs(entry.UniverseIds or {}) do
-            id = tonumber(id)
-            if id and not ByUniverseId[id] then
-                ByUniverseId[id] = entry
+
+        for _, key in ipairs({ "GameIds", "UniverseIds", "GameId" }) do
+            for _, id in ipairs(ids_of(entry[key])) do
+                id = tonumber(id)
+                if id then
+                    if ByUniverseId[id] and ByUniverseId[id] ~= entry then
+                        warn("[Prestine] Duplicate game ID " .. id .. ": " .. entry.Name .. " conflicts with " .. ByUniverseId[id].Name)
+                    else
+                        ByUniverseId[id] = entry
+                    end
+                end
             end
         end
     end
@@ -95,7 +108,7 @@ if not entry and (tonumber(game.GameId) or 0) ~= 0 then
 end
 
 if not entry then
-    warn("[Prestine] Unsupported game, place ID: " .. tostring(game.PlaceId))
+    warn("[Prestine] Unsupported game, place ID: " .. tostring(game.PlaceId) .. ", game ID: " .. tostring(game.GameId))
     return
 end
 
