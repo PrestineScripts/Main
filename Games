@@ -3,6 +3,7 @@
     {
       "Name": "Anime Dice",
       "PlaceIds": [113290951185459],
+      "GameIds": [],
       "Url": "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AnimeDice",
       "Version": "",
       "Updated": "",
@@ -12,7 +13,8 @@
     },
     {
       "Name": "AOT:Reborn",
-      "PlaceIds": [13379208636],
+      "PlaceIds": [],
+      "GameIds": [13379208636],
       "Url": "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AOTR.lua",
       "Version": "",
       "Updated": "",
