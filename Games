@@ -9,6 +9,16 @@
       "Status": null,
       "Features": [],
       "Changelog": []
+    },
+    {
+      "Name": "AOT:Reborn",
+      "PlaceIds": [13379208636],
+      "Url": "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AOTR.lua",
+      "Version": "",
+      "Updated": "",
+      "Status": null,
+      "Features": [],
+      "Changelog": []
     }
   ]
 }
