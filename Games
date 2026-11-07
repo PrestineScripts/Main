@@ -1,0 +1,14 @@
+{
+  "Games": [
+    {
+      "Name": "Anime Dice",
+      "PlaceIds": [113290951185459],
+      "Url": "https://raw.githubusercontent.com/PrestineScripts/Loader/refs/heads/main/AnimeDice",
+      "Version": "",
+      "Updated": "",
+      "Status": null,
+      "Features": [],
+      "Changelog": []
+    }
+  ]
+}
